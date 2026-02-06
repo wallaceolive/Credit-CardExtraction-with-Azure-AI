@@ -45,7 +45,7 @@ Fluxo simplificado da aplicação:
    - Data de validade
 5. Caso a leitura falhe, o app informa que o cartão não é válido.
 
-**SERVIÇO AZURE**:
+**SERVIÇO DE CONFIGURAÇÃO**:
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/b8b2eea7-d016-4763-8b04-991bf6c889bc" width="800">
