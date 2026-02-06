@@ -1,130 +1,126 @@
-💳 Extração de Cartões de Crédito com Azure AI
-📌 Visão Geral
+# 💳 Extração de Cartões de Crédito com Azure AI
 
-Este projeto foi desenvolvido como parte do desafio DIO - Desafio 1 Azure AI.
+## 📌 Visão Geral
+Este projeto foi desenvolvido como parte do desafio **DIO - Desafio 1 Azure AI**.  
 O objetivo é criar uma aplicação capaz de:
 
-Receber imagens de cartões de crédito via upload
+- Receber imagens de cartões de crédito via upload
+- Armazenar essas imagens no **Azure Blob Storage**
+- Extrair automaticamente dados importantes do cartão usando **Azure Document Intelligence (OCR)**:
+  - Tipo do cartão (VISA, MasterCard)
+  - Nome do titular
+  - Banco emissor
+  - Data de validade
 
-Armazenar essas imagens no Azure Blob Storage
+O projeto utiliza **Streamlit** para interface e os serviços de IA do **Microsoft Azure** para reconhecimento de informações de cartões.
 
-Extrair automaticamente dados importantes do cartão usando Azure Document Intelligence (OCR):
+---
 
-Tipo do cartão (VISA, MasterCard)
+## 🧠 Tecnologias Utilizadas
 
-Nome do titular
+**Microsoft Azure**
 
-Banco emissor
+- Azure Document Intelligence (OCR)
+- Azure Blob Storage
 
-Data de validade
+**Python**
 
-O projeto utiliza Streamlit para interface e os serviços de IA do Microsoft Azure para reconhecimento de informações de cartões.
+- Streamlit (interface web)
+- Requests (download de imagens)
+- dotenv (variáveis de ambiente)
+- APIs REST do Azure
 
-🧠 Tecnologias Utilizadas
+---
 
-Microsoft Azure
-
-Azure Document Intelligence (OCR)
-
-Azure Blob Storage
-
-Python
-
-Streamlit (interface web)
-
-Requests (download de imagens)
-
-dotenv (variáveis de ambiente)
-
-APIs REST do Azure
-
-🏗️ Arquitetura da Solução
-
+## 🏗️ Arquitetura da Solução
 Fluxo simplificado da aplicação:
 
-O usuário realiza o upload da imagem do cartão.
+1. O usuário realiza o **upload da imagem do cartão**.
+2. A imagem é enviada para o **Azure Blob Storage**.
+3. O **Azure Document Intelligence** processa a imagem e extrai os dados.
+4. Os dados são exibidos na interface Streamlit:
+   - Tipo de cartão
+   - Nome do titular
+   - Banco emissor
+   - Data de validade
+5. Caso a leitura falhe, o app informa que o cartão não é válido.
 
-A imagem é enviada para o Azure Blob Storage.
+**Diagrama do Fluxo**:
 
-O Azure Document Intelligence processa a imagem e extrai os dados.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b8b2eea7-d016-4763-8b04-991bf6c889bc" width="800">
+</p>
 
-Os dados são exibidos na interface Streamlit:
+---
 
-Tipo de cartão
+## ⚙️ Recursos Azure Criados
 
-Nome do titular
+- **Azure Document Intelligence**: OCR e extração de dados de cartões  
 
-Banco emissor
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/de4915fb-7257-4247-a593-b20d2d59fb29" width="600">
+</p>
 
-Data de validade
+- **Azure Blob Storage**: Armazena imagens enviadas
+- **Grupo de Recursos** dedicado ao projeto
 
-Caso a leitura falhe, o app informa que o cartão não é válido.
+---
 
-Diagrama do Fluxo
-<img width="1919" height="990" alt="Análise de cartão - 1" src="https://github.com/user-attachments/assets/b8b2eea7-d016-4763-8b04-991bf6c889bc" />
-
-⚙️ Recursos Azure Criados
-
-Azure Document Intelligence: OCR e extração de dados de cartões
-
-<img width="1036" height="906" alt="Ambiente Azure" src="https://github.com/user-attachments/assets/de4915fb-7257-4247-a593-b20d2d59fb29" />
-
-
-Azure Blob Storage: Armazena imagens enviadas
-
-Grupo de Recursos dedicado ao projeto
-
-🧪 Implementação
+## 🧪 Implementação
 
 O projeto está dividido em camadas:
 
-1️⃣ Backend (Serviços)
+### 1️⃣ Backend (Serviços)
+- `services/blob_service.py` → Upload de imagens para Azure Blob Storage
+- `services/card_extractor.py` → Extração de informações do cartão via OCR
 
-services/blob_service.py → Upload de imagens para Azure Blob Storage
+### 2️⃣ Frontend (Interface)
+- `src/app.py` → Interface Streamlit para upload, exibição da imagem e dados extraídos
 
-services/card_extractor.py → Extração de informações do cartão via OCR
+### 3️⃣ Configurações
+- `utils/config.py` → Configurações de endpoints, chaves e container do Azure
+- `.env` → Variáveis de ambiente para credenciais (não incluídas no repositório por segurança)
 
-2️⃣ Frontend (Interface)
+---
 
-src/app.py → Interface Streamlit para upload, exibição da imagem e dados extraídos
+## 📄 Resultados
 
-3️⃣ Configurações
+### 1️⃣ Cartão válido detectado
 
-utils/config.py → Configurações de endpoints, chaves e container do Azure
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/724b40f3-3692-44f0-9822-528906193725" width="400">
+</p>
 
-.env → Variáveis de ambiente para credenciais (não incluídas no repositório por segurança)
+### 2️⃣ Cartão inválido
 
-📄 Resultados
-1️⃣ Cartão válido detectado
-<img width="601" height="835" alt="Dio 2" src="https://github.com/user-attachments/assets/724b40f3-3692-44f0-9822-528906193725" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cecd52ad-5c19-4c13-a183-269e0acf07a0" width="400">
+</p>
 
-2️⃣ Cartão inválido
-<img width="618" height="787" alt="cartao invalido" src="https://github.com/user-attachments/assets/cecd52ad-5c19-4c13-a183-269e0acf07a0" />
+---
 
-🔐 Segurança
+## 🔐 Segurança
 
-As chaves de acesso do Azure não estão expostas no código
+- As chaves de acesso do Azure **não estão expostas no código**
+- Uso de **variáveis de ambiente** para todas as credenciais
+- Imagens armazenadas em container dedicado, sem exposição pública direta
 
-Uso de variáveis de ambiente para todas as credenciais
+---
 
-Imagens armazenadas em container dedicado, sem exposição pública direta
+## ✅ Conclusão
 
-✅ Conclusão
-
-O projeto atende aos requisitos propostos pela DIO, demonstrando uso prático de serviços de IA do Azure para OCR em cartões de crédito.
+O projeto atende aos requisitos propostos pela DIO, demonstrando **uso prático de serviços de IA do Azure para OCR em cartões de crédito**.  
 
 A solução pode ser expandida para:
 
-Validar números de cartões usando algoritmo de Luhn
+- Validar números de cartões usando algoritmo de Luhn  
+- Suportar diferentes tipos e layouts de cartão  
+- Integrar com dashboards, apps web ou mobile  
 
-Suportar diferentes tipos e layouts de cartão
+---
 
-Integrar com dashboards, apps web ou mobile
+## 📚 Referências
 
-📚 Referências
-
-Document Intelligence Azure
-
-Azure Blob Storage
-
-Streamlit
+- [Document Intelligence Azure](https://learn.microsoft.com/en-us/azure/applied-ai-services/document-intelligence/overview)  
+- [Azure Blob Storage](https://learn.microsoft.com/en-us/azure/storage/blobs/)  
+- [Streamlit](https://streamlit.io/)
